@@ -45,7 +45,7 @@ ants/SUBMISSION_1/Data/\>\""}], ";"}], " ", "\[IndentingNewLine]",
     RowBox[{
     "edgedir", "=", 
      "\"\<~/Dropbox/Ant+NeuralNetworks/Papers/spatial interactions \
-ants/SUBMISSION_1/Code/edgedata/\>\""}], ";"}], "\[IndentingNewLine]", 
+ants/SUBMISSION_1/Code/Edgedata/\>\""}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
     "colframedir", "=", 
