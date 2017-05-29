@@ -9,7 +9,7 @@ To generate all results, these codes are meant to be run sequentially:
 (4) Results and Figures 1-4.nb
 (5) Results and Figures 5-10.nb
 
-In file (0), you need to specify the directories to read in the edge data (included in folder 'Edgedata'), and the ant trajectory data, which is available at the following repository:
+In file (0), you need to specify the directories to read in the edge data (included in folder 'edgedata'), colony frame images (include in folder 'colframes') and the ant trajectory data, which is available at the following repository:
 (coming soon!)
 
 In file (0), you can also specify a directory to save processing results in intermediate steps.  This is optional, so if you don't do this, don't run the associated "Save" and "Get" commands.
