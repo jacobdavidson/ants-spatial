@@ -1,0 +1,1203 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     46210,       1195]
+NotebookOptionsPosition[     44843,       1142]
+NotebookOutlinePosition[     45196,       1158]
+CellTagsIndexPosition[     45153,       1155]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Select ants in different categories and create interpolated trajectories\
+\>", "Title",
+ CellChangeTimes->{{3.704353361941608*^9, 3.704353375325193*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["All ants; keep only points during focus tracking period", "Section",
+ CellChangeTimes->{{3.6842477242778873`*^9, 3.6842477301729918`*^9}, {
+  3.704355850805999*^9, 3.704355858509923*^9}, {3.704356417491171*^9, 
+  3.704356423595871*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "points", " ", "selected", " ", "by", " ", "the", " ", "categories"}], " ",
+    "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"fullpointsel", "=", 
+     RowBox[{"ParallelTable", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Table", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Module", "[", 
+          RowBox[{
+           RowBox[{"{", "traj", "}"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"traj", "=", 
+             RowBox[{"alltrajdata", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", "q"}], "]"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"filtertimerange", "[", 
+             RowBox[{
+              RowBox[{"Select", "[", 
+               RowBox[{
+                RowBox[{"allpointdata", "[", 
+                 RowBox[{"[", "col", "]"}], "]"}], ",", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"#", "[", 
+                   RowBox[{"[", "2", "]"}], "]"}], "\[Equal]", 
+                  RowBox[{"traj", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}]}], "&"}]}], "]"}], ",", 
+              RowBox[{"{", "}"}], ",", 
+              RowBox[{"alltrackingrange", "[", 
+               RowBox[{"[", "col", "]"}], "]"}]}], "]"}]}]}], "  ", 
+          RowBox[{"(*", " ", 
+           RowBox[{"note", " ", "that", " ", "passing", " ", "in", " ", 
+            RowBox[{"{", "}"}], " ", "instead", " ", "of", " ", 
+            RowBox[{"traj", " ", "!!"}]}], " ", "*)"}], "\[IndentingNewLine]",
+           "]"}], "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"q", ",", "1", ",", 
+           RowBox[{"Length", "[", 
+            RowBox[{"alltrajdata", "[", 
+             RowBox[{"[", "col", "]"}], "]"}], "]"}]}], "}"}]}], "]"}], 
+       "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", "1", ",", 
+         RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "get", " ", "interpolated", " ", "trajectory", " ", "coordinates"}], " ", 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"fulltrajinterpolated", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"interpolatetraj", "[", 
+           RowBox[{"#", ",", 
+            RowBox[{"alltrackingrange", "[", 
+             RowBox[{"[", "col", "]"}], "]"}]}], "]"}], "&"}], ",", 
+         RowBox[{"fullpointsel", "[", 
+          RowBox[{"[", "col", "]"}], "]"}]}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", 
+         RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"fulltrajcoords", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{"coordtoxy", ",", "fulltrajinterpolated", ",", 
+       RowBox[{"{", "2", "}"}]}], "]"}]}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.684247753568575*^9, 3.684247754920377*^9}, {
+  3.684247823066588*^9, 3.6842478769337063`*^9}, {3.6842480889886627`*^9, 
+  3.684248098559352*^9}, {3.689340424018325*^9, 3.6893404261855707`*^9}, {
+  3.704356816088222*^9, 3.704356816288683*^9}}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Interpolation","inhr",
+   "\"Requested order is too high; order has been reduced to \
+\\!\\(\\*RowBox[{\\\"{\\\", \\\"0\\\", \\\"}\\\"}]\\).\"",2,89,1,
+   27588571646185483984,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.704356846753771*^9, 3.704357361965724*^9, 
+  3.70435830160918*^9, 3.704692035198826*^9, 3.704993351442164*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Returning foragers and potential foragers with completed trajectories, then \
+all others.  Filters time ranges to only keep points during the focus period, \
+and to keep only points when foragers that left were inside the entrance \
+chamber\
+\>", "Section",
+ CellChangeTimes->{{3.682263549680764*^9, 3.6822635514588656`*^9}, {
+  3.682446691604145*^9, 3.6824466954783664`*^9}, {3.682508842893437*^9, 
+  3.6825088560391884`*^9}, {3.682509767879343*^9, 3.682509769039409*^9}, {
+  3.704353387765315*^9, 3.70435339096496*^9}, {3.704353652607891*^9, 
+  3.704353676479272*^9}, {3.704355878525524*^9, 3.7043558986730137`*^9}, {
+  3.70435619739203*^9, 3.704356227727438*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+     "trajectories", " ", "selected", " ", "by", " ", "categories", " ", 
+      "1"}], "-", "5"}], ",", " ", 
+    RowBox[{"as", " ", "defined", "\[IndentingNewLine]", 
+     RowBox[{"(", "1", ")"}], " ", "from", " ", "a", " ", "tunnel"}], ",", 
+    " ", 
+    RowBox[{"left", " ", "to", " ", 
+     RowBox[{"forage", ".", "  ", "Completed"}], " ", "trajectory", " ", 
+     "during", " ", "focus", " ", "period", "\[IndentingNewLine]", 
+     RowBox[{"(", "2", ")"}], " ", "from", " ", "a", " ", "tunnel"}], ",", 
+    " ", 
+    RowBox[{"returned", " ", "to", " ", "the", " ", "deeper", " ", 
+     RowBox[{"nest", ".", "  ", "Completed"}], " ", "trajectory", " ", 
+     "during", " ", "focus", " ", "period", "\[IndentingNewLine]", 
+     RowBox[{"(", "3", ")"}], " ", "returning", " ", "forager"}], ",", " ", 
+    RowBox[{"left", " ", "to", " ", 
+     RowBox[{"forage", ".", "  ", "Completed"}], " ", "trajectory", " ", 
+     "during", " ", "focus", " ", "period", "\[IndentingNewLine]", 
+     RowBox[{"(", "4", ")"}], " ", "returning", " ", "forager"}], ",", " ", 
+    RowBox[{"returned", " ", "to", " ", "the", " ", "deeper", " ", 
+     RowBox[{"nest", ".", "  ", "Completed"}], " ", "trajectory", " ", 
+     "during", " ", "focus", " ", "period", "\[IndentingNewLine]", 
+     RowBox[{"(", "5", ")"}], " ", "not", " ", "in", " ", "categories", " ", 
+     RowBox[{"(", 
+      RowBox[{"1", "-", "4"}], ")"}]}], ",", " ", 
+    RowBox[{
+    "including", " ", "ants", " ", "that", " ", "did", " ", "not", " ", 
+     "complete", " ", "trajectories", " ", "during", " ", "the", " ", "focus",
+      " ", "period", "\[IndentingNewLine]", "\[IndentingNewLine]", "For", " ",
+      "returning", " ", "foragers"}], ",", " ", 
+    RowBox[{
+    "filtertimerange", " ", "only", " ", "keeps", " ", "tracked", " ", 
+     "points", " ", "for", " ", "after", " ", "the", " ", "ant", " ", 
+     "crossed", " ", "the", " ", "entrance", " ", "chamber", " ", 
+     RowBox[{"boundary", ".", "\[IndentingNewLine]", "For"}], " ", "ants", 
+     " ", "that", " ", "left", " ", "to", " ", "forage"}], ",", " ", 
+    RowBox[{
+    "filtertimerange", " ", "only", " ", "keeps", " ", "tracked", " ", 
+     "points", " ", "for", " ", "before", " ", "the", " ", "ant", " ", 
+     "crossed", " ", "the", " ", "entrance", " ", "chamber", " ", 
+     RowBox[{"boundary", "."}]}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", " ", "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"trajectories", " ", "to", " ", "process"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"alltrajsel", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"sel1", "@", "#"}], ",", 
+           RowBox[{"sel2", "@", "#"}], ",", 
+           RowBox[{"sel3", "@", "#"}], ",", 
+           RowBox[{"sel4", "@", "#"}], ",", 
+           RowBox[{"sel5", "@", "#"}]}], "}"}], "&"}], "[", 
+        RowBox[{"alltrajdata", "[", 
+         RowBox[{"[", "col", "]"}], "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", 
+         RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"allIDsel", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{"First", ",", "alltrajsel", ",", 
+       RowBox[{"{", "3", "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "points", " ", "selected", " ", "by", " ", "the", " ", "categories"}], 
+     " ", ",", " ", 
+     RowBox[{
+     "andand", " ", "filtered", " ", "to", " ", "keep", " ", "only", " ", 
+      "within", " ", "focus", " ", "period", " ", "and", " ", "when", " ", 
+      "the", " ", "ants", " ", "where", " ", "in", " ", "the", " ", 
+      "entrance", " ", "chamber"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"allpointsel", "=", 
+     RowBox[{"ParallelTable", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Table", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Table", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"Module", "[", 
+            RowBox[{
+             RowBox[{"{", "traj", "}"}], ",", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"traj", "=", 
+               RowBox[{"alltrajsel", "[", 
+                RowBox[{"[", 
+                 RowBox[{"col", ",", "selcat", ",", "q"}], "]"}], "]"}]}], 
+              ";", "\[IndentingNewLine]", 
+              RowBox[{"filtertimerange", "[", 
+               RowBox[{
+                RowBox[{"Select", "[", 
+                 RowBox[{
+                  RowBox[{"allpointdata", "[", 
+                   RowBox[{"[", "col", "]"}], "]"}], ",", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "\[Equal]", 
+                    RowBox[{"traj", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], "&"}]}], "]"}], ",", 
+                "traj", ",", 
+                RowBox[{"alltrackingrange", "[", 
+                 RowBox[{"[", "col", "]"}], "]"}]}], "]"}]}]}], 
+            "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", ",", 
+           RowBox[{"{", 
+            RowBox[{"q", ",", "1", ",", 
+             RowBox[{"Length", "[", 
+              RowBox[{"alltrajsel", "[", 
+               RowBox[{"[", 
+                RowBox[{"col", ",", "selcat"}], "]"}], "]"}], "]"}]}], 
+            "}"}]}], "]"}], "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"selcat", ",", "1", ",", "5"}], "}"}]}], "]"}], 
+       "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", "1", ",", 
+         RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"get", " ", 
+     RowBox[{"ID", "'"}], "s", " ", "of", " ", "returning", " ", "foragers"}],
+     " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"allRFids", "=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"selRF", "[", "#", "]"}], "\[Transpose]"}], "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "&"}], "/@", "alltrajdata"}]}], ";"}],
+    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"interation", " ", "with", " ", "all", " ", 
+      RowBox[{"ants", ":", " ", 
+       RowBox[{
+       "time", " ", "and", " ", "locations", " ", "for", " ", "ants", " ", 
+        "in", " ", "each", " ", 
+        RowBox[{"category", "\[IndentingNewLine]", "'"}], 
+        RowBox[{"filterints", "'"}], " ", "selects", " ", "interactions", " ",
+         "from", " ", "the", " ", "trajectory", " ", "data"}]}]}], ",", " ", 
+     RowBox[{
+     "discarding", " ", "ones", " ", "marked", " ", "as", " ", 
+      "\"\<Received\>\""}], ",", " ", 
+     RowBox[{
+     "or", " ", "marked", " ", "as", " ", "with", " ", 
+      "\"\<NestMaintenance\>\"", " ", "ants"}]}], "\[IndentingNewLine]", " ", 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"allints", "=", 
+     RowBox[{"pcmap", "@", 
+      RowBox[{"Map", "[", 
+       RowBox[{"filterints", ",", "allpointsel", ",", 
+        RowBox[{"{", "3", "}"}]}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "interation", " ", "with", " ", "returning", " ", "forager", " ", "ants",
+       " ", 
+      RowBox[{"ants", ":", " ", 
+       RowBox[{
+       "time", " ", "and", " ", "locations", " ", "for", " ", "ants", " ", 
+        "in", " ", "each", " ", 
+        RowBox[{"category", "\[IndentingNewLine]", "'"}], 
+        RowBox[{"filterintsRF", "'"}], " ", "does", " ", "the", " ", "same", 
+        " ", "thing", " ", 
+        RowBox[{"as", " ", "'"}], 
+        RowBox[{"filterints", "'"}]}]}]}], ",", " ", 
+     RowBox[{
+     "but", " ", "also", " ", "only", " ", "keeps", " ", "interactions", " ", 
+      "that", " ", "were", " ", "made", " ", "with", " ", "returning", " ", 
+      "foragers"}], ",", " ", 
+     RowBox[{
+     "identified", " ", "by", " ", "the", " ", "ant", " ", "IDs", " ", "of", 
+      " ", "the", " ", "returning", " ", "foragers"}]}], 
+    "\[IndentingNewLine]", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"allintsRF", "=", 
+     RowBox[{"pcmap", "@", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"filterintsRF", "[", 
+            RowBox[{"#", ",", 
+             RowBox[{"allRFids", "[", 
+              RowBox[{"[", "col", "]"}], "]"}]}], "]"}], "&"}], ",", 
+          RowBox[{"allpointsel", "[", 
+           RowBox[{"[", "col", "]"}], "]"}], ",", 
+          RowBox[{"{", "2", "}"}]}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"col", ",", 
+          RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"get", " ", "interpolated", " ", "trajectory", " ", 
+     RowBox[{"coordinates", "."}]}], "  ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"alltrajinterpolated", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"interpolatetraj", "[", 
+           RowBox[{"#", ",", 
+            RowBox[{"alltrackingrange", "[", 
+             RowBox[{"[", "col", "]"}], "]"}]}], "]"}], "&"}], ",", 
+         RowBox[{"allpointsel", "[", 
+          RowBox[{"[", "col", "]"}], "]"}], ",", 
+         RowBox[{"{", "2", "}"}]}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", 
+         RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}], ";"}], " ", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"alltrajcoords", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{"coordtoxy", ",", "alltrajinterpolated", ",", 
+       RowBox[{"{", "3", "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "the", " ", "time", " ", "that", " ", "each", " ", "ant", " ", "spent", 
+     " ", "in", " ", "the", " ", "entrance", " ", "chamber"}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"alltimes", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"alldtused", "[", 
+            RowBox[{"[", "col", "]"}], "]"}], "*", 
+           RowBox[{"getdiff", "[", "#", "]"}]}], "&"}], ",", 
+         RowBox[{"alltrajinterpolated", "[", 
+          RowBox[{"[", "col", "]"}], "]"}], ",", 
+         RowBox[{"{", "2", "}"}]}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", 
+         RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}], 
+    ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.704353414893468*^9, 3.7043534348407907`*^9}, {
+  3.704353498027553*^9, 3.704353638745817*^9}, {3.704353767158819*^9, 
+  3.704353871589677*^9}, {3.704353923691639*^9, 3.7043539451567307`*^9}, {
+  3.704356473021084*^9, 3.704356497141198*^9}, {3.704356862540803*^9, 
+  3.7043568658468437`*^9}, {3.704363470230878*^9, 3.7043635008251953`*^9}}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Interpolation","inhr",
+   "\"Requested order is too high; order has been reduced to \
+\\!\\(\\*RowBox[{\\\"{\\\", \\\"0\\\", \\\"}\\\"}]\\).\"",2,97,2,
+   27588571646185483984,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.704356889199172*^9, 3.704357382622389*^9, 
+  3.704358322066956*^9, 3.7046920921240177`*^9, 3.704993406588121*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+All Returning Foragers, all Potential Foragers. 
+Filter time to keep points during focus period \
+\>", "Section",
+ CellChangeTimes->{{3.684248021857719*^9, 3.684248032768317*^9}, {
+  3.704356399235497*^9, 3.704356436853733*^9}, {3.704356510065927*^9, 
+  3.704356520825449*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"trajectories", ":", "  ", 
+     RowBox[{"all", " ", "returning", " ", "foragers"}]}], ",", " ", 
+    RowBox[{"all", " ", "potential", " ", "foragers"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"RFPFtrajsel", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"selRF", "@", "#"}], ",", 
+           RowBox[{"selPF", "@", "#"}]}], "}"}], "&"}], "[", 
+        RowBox[{"alltrajdata", "[", 
+         RowBox[{"[", "col", "]"}], "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", 
+         RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"RFPFIDsel", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{"First", ",", "RFPFtrajsel", ",", 
+       RowBox[{"{", "3", "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Returning", " ", 
+     RowBox[{"foragers", ":", "  ", "RF"}]}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"fullRFpointsel", "=", 
+     RowBox[{"ParallelTable", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Table", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Module", "[", 
+          RowBox[{
+           RowBox[{"{", "traj", "}"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"traj", "=", 
+             RowBox[{"RFPFtrajsel", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", "1", ",", "q"}], "]"}], "]"}]}], ";", "  ", 
+            RowBox[{"(*", " ", 
+             RowBox[{"category", " ", "1", " ", "for", " ", 
+              RowBox[{"RF", "'"}], "s", " ", "only"}], " ", "*)"}], 
+            "\[IndentingNewLine]", 
+            RowBox[{"filtertimerange", "[", 
+             RowBox[{
+              RowBox[{"Select", "[", 
+               RowBox[{
+                RowBox[{"allpointdata", "[", 
+                 RowBox[{"[", "col", "]"}], "]"}], ",", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"#", "[", 
+                   RowBox[{"[", "2", "]"}], "]"}], "\[Equal]", 
+                  RowBox[{"traj", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}]}], "&"}]}], "]"}], ",", 
+              RowBox[{"{", "}"}], ",", 
+              RowBox[{"alltrackingrange", "[", 
+               RowBox[{"[", "col", "]"}], "]"}]}], "]"}]}]}], " ", 
+          RowBox[{"(*", " ", 
+           RowBox[{"note", " ", "that", " ", "passing", " ", "in", " ", 
+            RowBox[{"{", "}"}], " ", "instead", " ", "of", " ", "traj"}], 
+           "  ", "*)"}], "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+         ",", 
+         RowBox[{"{", 
+          RowBox[{"q", ",", "1", ",", 
+           RowBox[{"Length", "[", 
+            RowBox[{"RFPFtrajsel", "[", 
+             RowBox[{"[", 
+              RowBox[{"col", ",", "1"}], "]"}], "]"}], "]"}]}], "}"}]}], 
+        "]"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", "1", ",", 
+         RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "get", " ", "interpolated", " ", "trajectory", " ", "coordinates"}], " ", 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"temptraj", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"interpolatetraj", "[", 
+           RowBox[{"#", ",", 
+            RowBox[{"alltrackingrange", "[", 
+             RowBox[{"[", "col", "]"}], "]"}]}], "]"}], "&"}], ",", 
+         RowBox[{"fullRFpointsel", "[", 
+          RowBox[{"[", "col", "]"}], "]"}]}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", 
+         RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"fullRFtrajinterpolated", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{"clip", ",", "temptraj", ",", 
+       RowBox[{"{", "2", "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"fullRFtrajcoords", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{"coordtoxy", ",", "temptraj", ",", 
+       RowBox[{"{", "2", "}"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Potential", " ", 
+     RowBox[{"foragers", ":", "  ", "PF"}]}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"fullPFpointsel", "=", 
+     RowBox[{"Table", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Table", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Module", "[", 
+          RowBox[{
+           RowBox[{"{", "traj", "}"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"traj", "=", 
+             RowBox[{"RFPFtrajsel", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", "2", ",", "q"}], "]"}], "]"}]}], ";", "  ", 
+            RowBox[{"(*", " ", 
+             RowBox[{"category", " ", "2", " ", "for", " ", 
+              RowBox[{"PF", "'"}], "s", " ", "only"}], " ", "*)"}], 
+            "\[IndentingNewLine]", 
+            RowBox[{"filtertimerange", "[", 
+             RowBox[{
+              RowBox[{"Select", "[", 
+               RowBox[{
+                RowBox[{"allpointdata", "[", 
+                 RowBox[{"[", "col", "]"}], "]"}], ",", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"#", "[", 
+                   RowBox[{"[", "2", "]"}], "]"}], "\[Equal]", 
+                  RowBox[{"traj", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}]}], "&"}]}], "]"}], ",", 
+              RowBox[{"{", "}"}], ",", 
+              RowBox[{"alltrackingrange", "[", 
+               RowBox[{"[", "col", "]"}], "]"}]}], "]"}]}]}], " ", 
+          RowBox[{"(*", " ", 
+           RowBox[{"note", " ", "that", " ", "passing", " ", "in", " ", 
+            RowBox[{"{", "}"}], " ", "instead", " ", "of", " ", "traj"}], 
+           "  ", "*)"}], "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+         ",", 
+         RowBox[{"{", 
+          RowBox[{"q", ",", "1", ",", 
+           RowBox[{"Length", "[", 
+            RowBox[{"RFPFtrajsel", "[", 
+             RowBox[{"[", 
+              RowBox[{"col", ",", "2"}], "]"}], "]"}], "]"}]}], "}"}]}], 
+        "]"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", "1", ",", 
+         RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "get", " ", "interpolated", " ", "trajectory", " ", "coordinates"}], " ", 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"fullPFtrajinterpolated", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"interpolatetraj", "[", 
+           RowBox[{"#", ",", 
+            RowBox[{"alltrackingrange", "[", 
+             RowBox[{"[", "col", "]"}], "]"}]}], "]"}], "&"}], ",", 
+         RowBox[{"fullPFpointsel", "[", 
+          RowBox[{"[", "col", "]"}], "]"}]}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", 
+         RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"fullPFtrajcoords", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{"coordtoxy", ",", "fullPFtrajinterpolated", ",", 
+       RowBox[{"{", "2", "}"}]}], "]"}]}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.684248044511821*^9, 3.684248116745502*^9}, {
+  3.704356446861219*^9, 3.704356446994939*^9}, {3.7043565371236897`*^9, 
+  3.704356542745144*^9}, {3.7043568771270523`*^9, 3.704356909768016*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Create lists of points, to use later for density functions:  
+all ants, all returning foragers, all potential foragers\
+\>", "Title",
+ CellChangeTimes->{{3.704357006672743*^9, 3.704357038753215*^9}, {
+  3.704357077223503*^9, 3.704357079575152*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"all", " ", "ants"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Ttrajpoints", "=", 
+    RowBox[{"Monitor", "[", 
+     RowBox[{
+      RowBox[{"Table", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"currtraj", "=", 
+          RowBox[{"Sort", "[", 
+           RowBox[{"Flatten", "[", 
+            RowBox[{
+             RowBox[{"fulltrajinterpolated", "[", 
+              RowBox[{"[", "col", "]"}], "]"}], ",", "1"}], "]"}], "]"}]}], 
+         ";", "\[IndentingNewLine]", 
+         RowBox[{"Table", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"maxpos", "=", "0"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"While", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"Length", "[", "currtraj", "]"}], ">", 
+                RowBox[{"(", 
+                 RowBox[{"maxpos", "+", "1"}], ")"}]}], "&&", 
+               RowBox[{
+                RowBox[{"currtraj", "[", 
+                 RowBox[{"[", 
+                  RowBox[{
+                   RowBox[{"maxpos", "+", "1"}], ",", "1"}], "]"}], "]"}], 
+                "\[Equal]", "timestep"}]}], ",", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"maxpos", "++"}], ";"}]}], "\[IndentingNewLine]", 
+             "]"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"keep", "=", 
+             RowBox[{"Take", "[", 
+              RowBox[{"currtraj", ",", "maxpos"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"currtraj", "=", 
+             RowBox[{"Drop", "[", 
+              RowBox[{"currtraj", ",", "maxpos"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"coordtoxy", "[", "keep", "]"}]}], "\[IndentingNewLine]", 
+           ",", 
+           RowBox[{"{", 
+            RowBox[{"timestep", ",", 
+             RowBox[{"alltrackingrange", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", "1"}], "]"}], "]"}], ",", 
+             RowBox[{"alltrackingrange", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", "2"}], "]"}], "]"}]}], "}"}]}], "]"}]}], 
+        "\[IndentingNewLine]", ",", 
+        RowBox[{"{", 
+         RowBox[{"col", ",", "1", ",", 
+          RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"col", ",", "timestep"}], "}"}]}], "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.6827856739364595`*^9, 3.6827856854731193`*^9}, {
+   3.682785800405693*^9, 3.6827858074580965`*^9}, 3.684248440303269*^9, {
+   3.704357087360269*^9, 3.704357089400298*^9}, {3.704357184550441*^9, 
+   3.7043571971535892`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"returning", " ", "foragers"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"TtrajpointsRF", "=", 
+    RowBox[{"Monitor", "[", 
+     RowBox[{
+      RowBox[{"Table", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"currtraj", "=", 
+          RowBox[{"Sort", "[", 
+           RowBox[{"Flatten", "[", 
+            RowBox[{
+             RowBox[{"fullRFtrajinterpolated", "[", 
+              RowBox[{"[", "col", "]"}], "]"}], ",", "1"}], "]"}], "]"}]}], 
+         ";", "\[IndentingNewLine]", 
+         RowBox[{"Table", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"maxpos", "=", "0"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"While", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"Length", "[", "currtraj", "]"}], ">", 
+                RowBox[{"(", 
+                 RowBox[{"maxpos", "+", "1"}], ")"}]}], "&&", 
+               RowBox[{
+                RowBox[{"currtraj", "[", 
+                 RowBox[{"[", 
+                  RowBox[{
+                   RowBox[{"maxpos", "+", "1"}], ",", "1"}], "]"}], "]"}], 
+                "\[Equal]", "timestep"}]}], ",", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"maxpos", "++"}], ";"}]}], "\[IndentingNewLine]", 
+             "]"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"keep", "=", 
+             RowBox[{"Take", "[", 
+              RowBox[{"currtraj", ",", "maxpos"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"currtraj", "=", 
+             RowBox[{"Drop", "[", 
+              RowBox[{"currtraj", ",", "maxpos"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"coordtoxy", "[", "keep", "]"}]}], "\[IndentingNewLine]", 
+           ",", 
+           RowBox[{"{", 
+            RowBox[{"timestep", ",", 
+             RowBox[{"alltrackingrange", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", "1"}], "]"}], "]"}], ",", 
+             RowBox[{"alltrackingrange", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", "2"}], "]"}], "]"}]}], "}"}]}], "]"}]}], 
+        "\[IndentingNewLine]", ",", 
+        RowBox[{"{", 
+         RowBox[{"col", ",", "1", ",", 
+          RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"col", ",", "timestep"}], "}"}]}], "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.682785870742716*^9, 3.6827859085478783`*^9}, {
+   3.6827859419437885`*^9, 3.6827861945782385`*^9}, {3.6827862591369305`*^9, 
+   3.6827863748205476`*^9}, {3.682788463665023*^9, 3.682788464039044*^9}, {
+   3.682855591477042*^9, 3.682855593960184*^9}, {3.6828675708896904`*^9, 
+   3.6828675744158916`*^9}, {3.683983864704772*^9, 3.683983894334565*^9}, 
+   3.684249053366662*^9, 3.684249086833187*^9, {3.684249140739435*^9, 
+   3.6842491525188093`*^9}, {3.684249206877955*^9, 3.6842492182716713`*^9}, {
+   3.684249400803529*^9, 3.684249400932762*^9}, 3.704357113512105*^9, {
+   3.704357202774531*^9, 3.704357247891602*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"potential", " ", "foragers"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"TtrajpointsPF", "=", 
+    RowBox[{"Monitor", "[", 
+     RowBox[{
+      RowBox[{"Table", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"currtraj", "=", 
+          RowBox[{"Sort", "[", 
+           RowBox[{"Flatten", "[", 
+            RowBox[{
+             RowBox[{"fullPFtrajinterpolated", "[", 
+              RowBox[{"[", "col", "]"}], "]"}], ",", "1"}], "]"}], "]"}]}], 
+         ";", "\[IndentingNewLine]", 
+         RowBox[{"Table", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"maxpos", "=", "0"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"While", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"Length", "[", "currtraj", "]"}], ">", 
+                RowBox[{"(", 
+                 RowBox[{"maxpos", "+", "1"}], ")"}]}], "&&", 
+               RowBox[{
+                RowBox[{"currtraj", "[", 
+                 RowBox[{"[", 
+                  RowBox[{
+                   RowBox[{"maxpos", "+", "1"}], ",", "1"}], "]"}], "]"}], 
+                "\[Equal]", "timestep"}]}], ",", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"maxpos", "++"}], ";"}]}], "\[IndentingNewLine]", 
+             "]"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"keep", "=", 
+             RowBox[{"Take", "[", 
+              RowBox[{"currtraj", ",", "maxpos"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"currtraj", "=", 
+             RowBox[{"Drop", "[", 
+              RowBox[{"currtraj", ",", "maxpos"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"coordtoxy", "[", "keep", "]"}]}], "\[IndentingNewLine]", 
+           ",", 
+           RowBox[{"{", 
+            RowBox[{"timestep", ",", 
+             RowBox[{"alltrackingrange", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", "1"}], "]"}], "]"}], ",", 
+             RowBox[{"alltrackingrange", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", "2"}], "]"}], "]"}]}], "}"}]}], "]"}]}], 
+        "\[IndentingNewLine]", ",", 
+        RowBox[{"{", 
+         RowBox[{"col", ",", "1", ",", 
+          RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"col", ",", "timestep"}], "}"}]}], "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.6842548121864977`*^9, 3.684254836964624*^9}, {
+  3.704357120639879*^9, 3.704357129039843*^9}, {3.704357217566131*^9, 
+  3.70435725605433*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Trajectories and lists of points, including walking speed", "Title",
+ CellChangeTimes->{{3.704358476631897*^9, 3.704358486047648*^9}, 
+   3.704359600086541*^9, {3.704359739395802*^9, 3.704359746451708*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"All", " ", "ants"}], ",", " ", 
+    RowBox[{"in", " ", "different", " ", "categories"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"alltrajinterpolatedspeed", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Length", "[", "#", "]"}], "\[Equal]", "0"}], ",", 
+          RowBox[{"{", "}"}], ",", 
+          RowBox[{
+           RowBox[{"Append", "[", 
+            RowBox[{
+             RowBox[{"#", "\[Transpose]"}], ",", 
+             RowBox[{"getspeed", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"#", "\[Transpose]"}], "[", 
+                RowBox[{"[", "2", "]"}], "]"}], ",", "smfactor"}], "]"}]}], 
+            "]"}], "\[Transpose]"}]}], "]"}], "&"}], ",", 
+       "alltrajinterpolated", ",", 
+       RowBox[{"{", "3", "}"}]}], "]"}]}], ";"}], "  ", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"filters", " ", "time", " ", "points"}], ",", " ", 
+     RowBox[{
+     "to", " ", "keep", " ", "only", " ", "times", " ", "when", " ", 
+      "foragers", " ", "were", " ", "in", " ", "the", " ", "entrance", " ", 
+      RowBox[{"chamber", ":", "  ", 
+       RowBox[{
+       "use", " ", "this", " ", "to", " ", "make", " ", "calcuations", " ", 
+        "for", " ", "individual", " ", "ants"}]}]}]}], " ", "*)"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"fulltrajinterpolatedspeed", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Length", "[", "#", "]"}], "\[Equal]", "0"}], ",", 
+          RowBox[{"{", "}"}], ",", 
+          RowBox[{
+           RowBox[{"Append", "[", 
+            RowBox[{
+             RowBox[{"#", "\[Transpose]"}], ",", 
+             RowBox[{"getspeed", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"#", "\[Transpose]"}], "[", 
+                RowBox[{"[", "2", "]"}], "]"}], ",", "smfactor"}], "]"}]}], 
+            "]"}], "\[Transpose]"}]}], "]"}], "&"}], ",", 
+       "fulltrajinterpolated", ",", 
+       RowBox[{"{", "2", "}"}]}], "]"}]}], ";"}], " ", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "only", " ", "filters", " ", "time", " ", "points", " ", "to", " ", 
+     "keep", " ", "within", " ", "focus", " ", 
+     RowBox[{"period", ":", "  ", 
+      RowBox[{
+      "use", " ", "this", " ", "for", " ", "constructing", " ", "density", 
+       " ", "functions"}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Ttrajpointsspeed", "=", 
+     RowBox[{"ParallelTable", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"currtraj", "=", 
+         RowBox[{"Sort", "[", 
+          RowBox[{"Flatten", "[", 
+           RowBox[{
+            RowBox[{"fulltrajinterpolatedspeed", "[", 
+             RowBox[{"[", "col", "]"}], "]"}], ",", "1"}], "]"}], "]"}]}], 
+        ";", "\[IndentingNewLine]", 
+        RowBox[{"Table", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"maxpos", "=", "0"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"While", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Length", "[", "currtraj", "]"}], ">", 
+               RowBox[{"(", 
+                RowBox[{"maxpos", "+", "1"}], ")"}]}], "&&", 
+              RowBox[{
+               RowBox[{"currtraj", "[", 
+                RowBox[{"[", 
+                 RowBox[{
+                  RowBox[{"maxpos", "+", "1"}], ",", "1"}], "]"}], "]"}], 
+               "\[Equal]", "timestep"}]}], ",", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"maxpos", "++"}], ";"}]}], "\[IndentingNewLine]", "]"}],
+            ";", "\[IndentingNewLine]", 
+           RowBox[{"keep", "=", 
+            RowBox[{"Take", "[", 
+             RowBox[{"currtraj", ",", "maxpos"}], "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"currtraj", "=", 
+            RowBox[{"Drop", "[", 
+             RowBox[{"currtraj", ",", "maxpos"}], "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"toxyspeed", "[", "keep", "]"}]}], "\[IndentingNewLine]", 
+          ",", 
+          RowBox[{"{", 
+           RowBox[{"timestep", ",", 
+            RowBox[{"alltrackingrange", "[", 
+             RowBox[{"[", 
+              RowBox[{"col", ",", "1"}], "]"}], "]"}], ",", 
+            RowBox[{"alltrackingrange", "[", 
+             RowBox[{"[", 
+              RowBox[{"col", ",", "2"}], "]"}], "]"}]}], "}"}]}], "]"}]}], 
+       "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", "1", ",", 
+         RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}], 
+    ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.704358579646318*^9, 3.704358588126052*^9}, {
+  3.7043597495019083`*^9, 3.7043598468872013`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Returning", " ", "foragers"}], " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"fullRFtrajinterpolatedspeed", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Length", "[", "#", "]"}], "\[Equal]", "0"}], ",", 
+          RowBox[{"{", "}"}], ",", 
+          RowBox[{
+           RowBox[{"Append", "[", 
+            RowBox[{
+             RowBox[{"#", "\[Transpose]"}], ",", 
+             RowBox[{"getspeed", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"#", "\[Transpose]"}], "[", 
+                RowBox[{"[", "2", "]"}], "]"}], ",", "smfactor"}], "]"}]}], 
+            "]"}], "\[Transpose]"}]}], "]"}], "&"}], ",", 
+       "fullRFtrajinterpolated", ",", 
+       RowBox[{"{", "2", "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"TtrajpointsspeedRF", "=", 
+     RowBox[{"ParallelTable", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"currtraj", "=", 
+         RowBox[{"Sort", "[", 
+          RowBox[{"Flatten", "[", 
+           RowBox[{
+            RowBox[{"fullRFtrajinterpolatedspeed", "[", 
+             RowBox[{"[", "col", "]"}], "]"}], ",", "1"}], "]"}], "]"}]}], 
+        ";", "\[IndentingNewLine]", 
+        RowBox[{"Table", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"maxpos", "=", "0"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"While", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Length", "[", "currtraj", "]"}], ">", 
+               RowBox[{"(", 
+                RowBox[{"maxpos", "+", "1"}], ")"}]}], "&&", 
+              RowBox[{
+               RowBox[{"currtraj", "[", 
+                RowBox[{"[", 
+                 RowBox[{
+                  RowBox[{"maxpos", "+", "1"}], ",", "1"}], "]"}], "]"}], 
+               "\[Equal]", "timestep"}]}], ",", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"maxpos", "++"}], ";"}]}], "\[IndentingNewLine]", "]"}],
+            ";", "\[IndentingNewLine]", 
+           RowBox[{"keep", "=", 
+            RowBox[{"Take", "[", 
+             RowBox[{"currtraj", ",", "maxpos"}], "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"currtraj", "=", 
+            RowBox[{"Drop", "[", 
+             RowBox[{"currtraj", ",", "maxpos"}], "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"toxyspeed", "[", "keep", "]"}]}], "\[IndentingNewLine]", 
+          ",", 
+          RowBox[{"{", 
+           RowBox[{"timestep", ",", 
+            RowBox[{"alltrackingrange", "[", 
+             RowBox[{"[", 
+              RowBox[{"col", ",", "1"}], "]"}], "]"}], ",", 
+            RowBox[{"alltrackingrange", "[", 
+             RowBox[{"[", 
+              RowBox[{"col", ",", "2"}], "]"}], "]"}]}], "}"}]}], "]"}]}], 
+       "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", "1", ",", 
+         RowBox[{"Length", "@", "colnames"}]}], "}"}]}], "]"}]}], 
+    ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.7043585956503887`*^9, 3.7043586038789473`*^9}, 
+   3.7043596434278593`*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Speed for all", "Subchapter",
+ CellChangeTimes->{{3.704363434124343*^9, 3.704363435523919*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"allspeedtemp", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"getspeed", "[", 
+       RowBox[{"#", ",", "smfactor"}], "]"}], "&"}], ",", "alltrajcoords", 
+     ",", 
+     RowBox[{"{", "3", "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"allspeeds", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"allspeedtemp", "[", 
+       RowBox[{"[", "col", "]"}], "]"}], 
+      FractionBox["1", 
+       RowBox[{
+        RowBox[{"alldtused", "[", 
+         RowBox[{"[", "col", "]"}], "]"}], 
+        RowBox[{"antsizes", "[", 
+         RowBox[{"[", "col", "]"}], "]"}]}]]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"col", ",", "4"}], "}"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.70436343128664*^9, 3.704363432186613*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Save quantities to use in later calculations", "Title",
+ CellChangeTimes->{{3.704357093238881*^9, 3.704357099942398*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Save", "[", 
+   RowBox[{
+    RowBox[{"savedir", "<>", "\"\<Ttrajpoints\>\""}], ",", "Ttrajpoints"}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Save", "[", 
+   RowBox[{
+    RowBox[{"savedir", "<>", "\"\<TtrajpointsRF\>\""}], ",", 
+    "TtrajpointsRF"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Save", "[", 
+   RowBox[{
+    RowBox[{"savedir", "<>", "\"\<TtrajpointsPF\>\""}], ",", 
+    "TtrajpointsPF"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Save", "[", 
+   RowBox[{
+    RowBox[{"savedir", "<>", "\"\<Ttrajpointsspeed\>\""}], ",", 
+    "Ttrajpointsspeed"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Save", "[", 
+   RowBox[{
+    RowBox[{"savedir", "<>", "\"\<TtrajpointsspeedRF\>\""}], ",", 
+    "TtrajpointsspeedRF"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.704357116774778*^9, 3.7043571232808104`*^9}, {
+  3.704357452242467*^9, 3.7043574524426527`*^9}, {3.704359421326128*^9, 
+  3.704359422947711*^9}, {3.704359692979847*^9, 3.704359702209034*^9}}]
+}, Open  ]]
+},
+WindowSize->{1119, 751},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
+2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 163, 3, 148, "Title"],
+Cell[CellGroupData[{
+Cell[768, 29, 242, 3, 64, "Section"],
+Cell[CellGroupData[{
+Cell[1035, 36, 3288, 81, 285, "Input"],
+Cell[4326, 119, 390, 8, 24, "Message"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4765, 133, 676, 11, 134, "Section"],
+Cell[CellGroupData[{
+Cell[5466, 148, 11312, 264, 1083, "Input"],
+Cell[16781, 414, 393, 8, 24, "Message"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17223, 428, 287, 6, 99, "Section"],
+Cell[17513, 436, 7769, 196, 705, "Input"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25331, 638, 258, 5, 148, "Title"],
+Cell[25592, 645, 2729, 65, 285, "Input"],
+Cell[28324, 712, 3139, 70, 285, "Input"],
+Cell[31466, 784, 2662, 64, 285, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[34165, 853, 212, 2, 92, "Title"],
+Cell[34380, 857, 4997, 128, 432, "Input"],
+Cell[39380, 987, 3240, 83, 327, "Input"],
+Cell[CellGroupData[{
+Cell[42645, 1074, 101, 1, 63, "Subchapter"],
+Cell[42749, 1077, 828, 25, 72, "Input"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[43626, 1108, 127, 1, 92, "Title"],
+Cell[43756, 1111, 1071, 28, 117, "Input"]
+}, Open  ]]
+}
+]
+*)
+

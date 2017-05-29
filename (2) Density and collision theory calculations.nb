@@ -1,0 +1,843 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     30922,        835]
+NotebookOptionsPosition[     29702,        787]
+NotebookOutlinePosition[     30058,        803]
+CellTagsIndexPosition[     30015,        800]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Density functions, for density surrounding each ant", "Title",
+ CellChangeTimes->{{3.704357530502079*^9, 3.704357531470257*^9}, {
+  3.704357645362194*^9, 3.704357652867681*^9}, {3.704357818824534*^9, 
+  3.704357822776347*^9}, {3.704359498501515*^9, 3.7043595040316257`*^9}}],
+
+Cell["Note:  these take a few minutes to run", "Subchapter",
+ CellChangeTimes->{{3.704358174701701*^9, 3.704358180845611*^9}, {
+  3.7043599299202757`*^9, 3.704359931208391*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Surrounding density of all ants", "Subchapter",
+ CellChangeTimes->{{3.7043578320165043`*^9, 3.704357832760326*^9}, {
+  3.704357914679145*^9, 3.704357917038816*^9}, {3.7043599219644814`*^9, 
+  3.704359925831962*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"densityALL", "=", 
+   RowBox[{"ParallelTable", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"traj", ",", "distances", ",", "sz"}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"traj", "=", 
+         RowBox[{"alltrajinterpolated", "[", 
+          RowBox[{"[", 
+           RowBox[{"col", ",", "group", ",", "ant"}], "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"distances", "=", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"getdistances", "[", 
+            RowBox[{
+             RowBox[{"#", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], ",", 
+             RowBox[{"Ttrajpoints", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", 
+                RowBox[{
+                 RowBox[{"#", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], "-", 
+                 RowBox[{"alltrackingrange", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"col", ",", "1"}], "]"}], "]"}], "+", "1"}]}], 
+               "]"}], "]"}]}], "]"}], "&"}], "/@", "traj"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"sz", "=", 
+         RowBox[{"mult", " ", 
+          RowBox[{"antsizes", "[", 
+           RowBox[{"[", "col", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"gweights", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "*", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Length", "[", 
+                RowBox[{"Select", "[", 
+                 RowBox[{"#", ",", 
+                  RowBox[{
+                   RowBox[{
+                   "0", "\[LessEqual]", " ", "#", "\[LessEqual]", "sz"}], 
+                   "&"}]}], "]"}], "]"}], "-", "1"}], ")"}]}], "  ", 
+            RowBox[{"(*", " ", 
+             RowBox[{
+              RowBox[{
+              "Note", " ", "that", " ", "need", " ", "to", " ", "subtract", 
+               " ", "1", " ", "here"}], ",", " ", 
+              RowBox[{
+              "to", " ", "account", " ", "for", " ", "the", " ", "focus", " ",
+                "ant"}]}], " ", "*)"}], "\[IndentingNewLine]", "+", 
+            RowBox[{
+             RowBox[{"gweights", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "*", 
+             RowBox[{"Length", "[", 
+              RowBox[{"Select", "[", 
+               RowBox[{"#", ",", 
+                RowBox[{
+                 RowBox[{"sz", "<", "#", "\[LessEqual]", 
+                  RowBox[{"2", "sz"}]}], "&"}]}], "]"}], "]"}], 
+             "\[IndentingNewLine]", 
+             RowBox[{"gweights", "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "*", 
+             RowBox[{"Length", "[", 
+              RowBox[{"Select", "[", 
+               RowBox[{"#", ",", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"2", "sz"}], "<", "#", "\[LessEqual]", 
+                  RowBox[{"3", "sz"}]}], "&"}]}], "]"}], "]"}]}]}], ")"}], 
+          "&"}], "/@", "distances"}]}]}], "\[IndentingNewLine]", "]"}], 
+     "\[IndentingNewLine]", ",", 
+     RowBox[{"{", 
+      RowBox[{"col", ",", "4"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"group", ",", "5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"ant", ",", 
+       RowBox[{"Length", "[", 
+        RowBox[{"alltrajinterpolated", "[", 
+         RowBox[{"[", 
+          RowBox[{"col", ",", "group"}], "]"}], "]"}], "]"}]}], "}"}]}], 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.682887895712204*^9, 3.6828879322822957`*^9}, {
+   3.6828879630600557`*^9, 3.6828880008892193`*^9}, {3.6828880323240175`*^9, 
+   3.682888150217761*^9}, {3.6839863187099*^9, 3.683986330525422*^9}, {
+   3.6839865341188297`*^9, 3.683986667424631*^9}, {3.683986764989262*^9, 
+   3.683986767571597*^9}, 3.684501919709154*^9, 3.6845025576692133`*^9, {
+   3.684502760860087*^9, 3.684502799381526*^9}, {3.704357928137136*^9, 
+   3.7043579288973303`*^9}, {3.704358015025621*^9, 3.704358033046091*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Surrounding density of returning foragers", "Subchapter",
+ CellChangeTimes->{{3.7043579023786783`*^9, 3.704357908942732*^9}, {
+  3.704359917290388*^9, 3.704359919448175*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"densityRF", "=", 
+   RowBox[{"ParallelTable", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "traj", ",", "distances", ",", "sz", ",", "individualcorrection"}], 
+        "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"traj", "=", 
+         RowBox[{"alltrajinterpolated", "[", 
+          RowBox[{"[", 
+           RowBox[{"col", ",", "group", ",", "ant"}], "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"distances", "=", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"getdistances", "[", 
+            RowBox[{
+             RowBox[{"#", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], ",", 
+             RowBox[{"TtrajpointsRF", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", 
+                RowBox[{
+                 RowBox[{"#", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], "-", 
+                 RowBox[{"alltrackingrange", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"col", ",", "1"}], "]"}], "]"}], "+", "1"}]}], 
+               "]"}], "]"}]}], "]"}], "&"}], "/@", "traj"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"sz", "=", 
+         RowBox[{"mult", " ", 
+          RowBox[{"antsizes", "[", 
+           RowBox[{"[", "col", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"individualcorrection", "=", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"group", "\[Equal]", "3"}], "||", 
+            RowBox[{"group", "\[Equal]", "4"}]}], ",", "1", ",", "0"}], 
+          "]"}]}], ";", " ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"correction", ",", " ", 
+          RowBox[{
+          "because", " ", "for", " ", "groups", " ", "3", " ", "and", " ", 
+           "4"}], ",", " ", 
+          RowBox[{"Ttrajpoints", " ", "contains", " ", "them"}]}], " ", 
+         "*)"}], "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"gweights", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "*", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Length", "[", 
+                RowBox[{"Select", "[", 
+                 RowBox[{"#", ",", 
+                  RowBox[{
+                   RowBox[{
+                   "0", "\[LessEqual]", " ", "#", "\[LessEqual]", "sz"}], 
+                   "&"}]}], "]"}], "]"}], "-", "individualcorrection"}], 
+              ")"}]}], "\[IndentingNewLine]", "+", 
+            RowBox[{
+             RowBox[{"gweights", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "*", 
+             RowBox[{"Length", "[", 
+              RowBox[{"Select", "[", 
+               RowBox[{"#", ",", 
+                RowBox[{
+                 RowBox[{"sz", "<", "#", "\[LessEqual]", 
+                  RowBox[{"2", "sz"}]}], "&"}]}], "]"}], "]"}], 
+             "\[IndentingNewLine]", 
+             RowBox[{"gweights", "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "*", 
+             RowBox[{"Length", "[", 
+              RowBox[{"Select", "[", 
+               RowBox[{"#", ",", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"2", "sz"}], "<", "#", "\[LessEqual]", 
+                  RowBox[{"3", "sz"}]}], "&"}]}], "]"}], "]"}]}]}], ")"}], 
+          "&"}], "/@", "distances"}]}]}], "\[IndentingNewLine]", "]"}], 
+     "\[IndentingNewLine]", ",", 
+     RowBox[{"{", 
+      RowBox[{"col", ",", "4"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"group", ",", "5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"ant", ",", 
+       RowBox[{"Length", "[", 
+        RowBox[{"alltrajinterpolated", "[", 
+         RowBox[{"[", 
+          RowBox[{"col", ",", "group"}], "]"}], "]"}], "]"}]}], "}"}]}], 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.704358038838945*^9, 3.7043580402469873`*^9}, 
+   3.704358988126418*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Surrounding density of potential foragers", "Subchapter",
+ CellChangeTimes->{{3.70435788721526*^9, 3.704357912733933*^9}, {
+  3.704359904624435*^9, 3.704359913560636*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"densityPF", "=", 
+   RowBox[{"ParallelTable", "[", "\n", 
+    RowBox[{
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "traj", ",", "distances", ",", "sz", ",", "individualcorrection"}], 
+        "}"}], ",", "\n", 
+       RowBox[{
+        RowBox[{"traj", "=", 
+         RowBox[{"alltrajinterpolated", "[", 
+          RowBox[{"[", 
+           RowBox[{"col", ",", "group", ",", "ant"}], "]"}], "]"}]}], ";", 
+        "\n", 
+        RowBox[{"distances", "=", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"getdistances", "[", 
+            RowBox[{
+             RowBox[{"#", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], ",", 
+             RowBox[{"TtrajpointsPF", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", 
+                RowBox[{
+                 RowBox[{"#", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], "-", 
+                 RowBox[{"alltrackingrange", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"col", ",", "1"}], "]"}], "]"}], "+", "1"}]}], 
+               "]"}], "]"}]}], "]"}], "&"}], "/@", "traj"}]}], ";", "\n", 
+        RowBox[{"sz", "=", 
+         RowBox[{"mult", " ", 
+          RowBox[{"antsizes", "[", 
+           RowBox[{"[", "col", "]"}], "]"}]}]}], ";", "\n", 
+        RowBox[{"individualcorrection", "=", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"group", "\[Equal]", "1"}], "||", 
+            RowBox[{"group", "\[Equal]", "2"}]}], ",", "1", ",", "0"}], 
+          "]"}]}], ";", " ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"correction", ",", " ", 
+          RowBox[{
+          "because", " ", "for", " ", "groups", " ", "1", " ", "and", " ", 
+           "2", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"i", ".", "e", ".", " ", 
+              RowBox[{"PF", "'"}]}], "s"}], ")"}]}], ",", " ", 
+          RowBox[{"Ttrajpoints", " ", "contains", " ", "them"}]}], " ", 
+         "*)"}], "\n", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"gweights", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "*", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Length", "[", 
+                RowBox[{"Select", "[", 
+                 RowBox[{"#", ",", 
+                  RowBox[{
+                   RowBox[{
+                   "0", "\[LessEqual]", " ", "#", "\[LessEqual]", "sz"}], 
+                   "&"}]}], "]"}], "]"}], "-", "individualcorrection"}], 
+              ")"}]}], "\n", "+", 
+            RowBox[{
+             RowBox[{"gweights", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "*", 
+             RowBox[{"Length", "[", 
+              RowBox[{"Select", "[", 
+               RowBox[{"#", ",", 
+                RowBox[{
+                 RowBox[{"sz", "<", "#", "\[LessEqual]", 
+                  RowBox[{"2", "sz"}]}], "&"}]}], "]"}], "]"}], "\n", 
+             RowBox[{"gweights", "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "*", 
+             RowBox[{"Length", "[", 
+              RowBox[{"Select", "[", 
+               RowBox[{"#", ",", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"2", "sz"}], "<", "#", "\[LessEqual]", 
+                  RowBox[{"3", "sz"}]}], "&"}]}], "]"}], "]"}]}]}], ")"}], 
+          "&"}], "/@", "distances"}]}]}], "\n", "]"}], "\n", ",", 
+     RowBox[{"{", 
+      RowBox[{"col", ",", "4"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"group", ",", "5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"ant", ",", 
+       RowBox[{"Length", "[", 
+        RowBox[{"alltrajinterpolated", "[", 
+         RowBox[{"[", 
+          RowBox[{"col", ",", "group"}], "]"}], "]"}], "]"}]}], "}"}]}], 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7043578990546494`*^9, 3.704357899056201*^9}, {
+   3.70435804255931*^9, 3.7043580448011723`*^9}, 3.704359526051421*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Collision theory model calculations", "Title",
+ CellChangeTimes->{{3.704359944791855*^9, 3.7043599625459414`*^9}, {
+  3.7043600424940863`*^9, 3.7043600727222548`*^9}, {3.704782276470846*^9, 
+  3.704782283733079*^9}, {3.704782327817597*^9, 3.704782333337797*^9}, {
+  3.7047825140412893`*^9, 3.7047825184720583`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Average speed of returning foragers in the entrance chamber (for random \
+mixture model)\
+\>", "Subchapter",
+ CellChangeTimes->{
+  3.704782273749436*^9, {3.704782340618197*^9, 3.7047823905046177`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ECTtrajpointsspeedRF", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"zmean", "[", 
+          RowBox[{
+           RowBox[{"Select", "[", 
+            RowBox[{"#", ",", 
+             RowBox[{
+              RowBox[{"inPolyQ", "[", 
+               RowBox[{
+                RowBox[{"edgedata", "[", 
+                 RowBox[{"[", "col", "]"}], "]"}], ",", 
+                RowBox[{"#", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "&"}]}], "]"}], "[", 
+           RowBox[{"[", 
+            RowBox[{";;", ",", "2"}], "]"}], "]"}], "]"}], "&"}], ",", 
+        RowBox[{"TtrajpointsspeedRF", "[", 
+         RowBox[{"[", "col", "]"}], "]"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"col", ",", "4"}], "}"}]}], "]"}]}], ";"}], " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "counts", " ", "of", " ", "returning", " ", "foragers", " ", "in", " ", 
+     "the", " ", "entrance", " ", "chamber"}], ",", " ", 
+    RowBox[{
+    "also", " ", "keeping", " ", "speed", " ", "in", " ", "the", " ", "data", 
+     " ", "structure"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "average", " ", "speed", " ", "of", " ", "returning", " ", "foragers", 
+     " ", "in", " ", "the", " ", "entrance", " ", "chamber"}], " ", "-", " ", 
+    
+    RowBox[{"saving", " ", "for", " ", "each", " ", "focus", " ", "ant"}]}], 
+   " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"avgspeedRF", "=", 
+   RowBox[{"Table", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"traj", ",", "speeds"}], "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"traj", "=", 
+         RowBox[{"alltrajinterpolated", "[", 
+          RowBox[{"[", 
+           RowBox[{"col", ",", "group", ",", "ant"}], "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"speeds", "=", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"ECTtrajpointsspeedRF", "[", 
+            RowBox[{"[", 
+             RowBox[{"col", ",", 
+              RowBox[{
+               RowBox[{"#", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], "-", 
+               RowBox[{"alltrackingrange", "[", 
+                RowBox[{"[", 
+                 RowBox[{"col", ",", "1"}], "]"}], "]"}], "+", "1"}]}], "]"}],
+             "]"}], "&"}], "/@", "traj"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"N", "[", "speeds", "]"}]}]}], "\[IndentingNewLine]", "]"}], 
+     "\[IndentingNewLine]", ",", 
+     RowBox[{"{", 
+      RowBox[{"col", ",", "4"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"group", ",", "5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"ant", ",", 
+       RowBox[{"Length", "[", 
+        RowBox[{"alltrajinterpolated", "[", 
+         RowBox[{"[", 
+          RowBox[{"col", ",", "group"}], "]"}], "]"}], "]"}]}], "}"}]}], 
+    "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7047830032734423`*^9, 3.704783052140449*^9}, {
+  3.704783139727748*^9, 3.704783163929646*^9}, {3.704992116471959*^9, 
+  3.7049921327145147`*^9}, {3.704992164102976*^9, 3.704992194024178*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Number of returning foragers in the entrance chamber (for random mixture \
+model)\
+\>", "Subchapter",
+ CellChangeTimes->{{3.7047825247295*^9, 3.704782538402172*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ECTtrajpointsRF", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Count", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"inPolyQ", "[", 
+              RowBox[{
+               RowBox[{"edgedata", "[", 
+                RowBox[{"[", "col", "]"}], "]"}], ",", "#"}], "]"}], "&"}], "/@",
+             "#"}], ",", "True"}], "]"}], "&"}], ",", 
+        RowBox[{"TtrajpointsRF", "[", 
+         RowBox[{"[", "col", "]"}], "]"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"col", ",", "4"}], "}"}]}], "]"}]}], ";"}], " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "counts", " ", "the", " ", "number", " ", "of", " ", "returning", " ", 
+    "foragers", " ", "in", " ", "the", " ", "entrance", " ", "chamber", " ", 
+    "at", " ", "each", " ", "time", " ", "point"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"randmixcountsRF", "=", 
+   RowBox[{"Monitor", "[", 
+    RowBox[{
+     RowBox[{"Table", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Module", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"traj", ",", "numants"}], "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"traj", "=", 
+           RowBox[{"alltrajinterpolated", "[", 
+            RowBox[{"[", 
+             RowBox[{"col", ",", "group", ",", "ant"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"numants", "=", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"ECTtrajpointsRF", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", 
+                RowBox[{
+                 RowBox[{"#", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], "-", 
+                 RowBox[{"alltrackingrange", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"col", ",", "1"}], "]"}], "]"}], "+", "1"}]}], 
+               "]"}], "]"}], "&"}], "/@", "traj"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"N", "[", "numants", "]"}]}]}], " ", "\[IndentingNewLine]", 
+        "]"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", "4"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"group", ",", "5"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"ant", ",", 
+         RowBox[{"Length", "[", 
+          RowBox[{"alltrajinterpolated", "[", 
+           RowBox[{"[", 
+            RowBox[{"col", ",", "group"}], "]"}], "]"}], "]"}]}], "}"}]}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"col", ",", "group"}], "}"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7047825425486107`*^9, 3.704782570766485*^9}, {
+  3.704782812563346*^9, 3.704782848315708*^9}, {3.704992077406726*^9, 
+  3.704992102653615*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Relative speed times density of surrounding returning foragers (for local \
+density model)\
+\>", "Subchapter",
+ CellChangeTimes->{
+  3.704782273749436*^9, {3.704782340618197*^9, 3.7047823525389767`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"relativeRFspeeddensity", "=", 
+   RowBox[{"Monitor", "[", 
+    RowBox[{
+     RowBox[{"Table", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Module", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "traj", ",", "distances", ",", "sz", ",", "speeds", ",", 
+           "focusspeed", ",", "avgspeed", ",", "together"}], "}"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"traj", "=", 
+           RowBox[{"alltrajinterpolated", "[", 
+            RowBox[{"[", 
+             RowBox[{"col", ",", "group", ",", "ant"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"focusspeed", "=", 
+           RowBox[{"alltrajinterpolatedspeed", "[", 
+            RowBox[{"[", 
+             RowBox[{"col", ",", "group", ",", "ant", ",", ";;", ",", "3"}], 
+             "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"distances", "=", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"getdistances", "[", 
+              RowBox[{
+               RowBox[{"#", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], ",", 
+               RowBox[{"TtrajpointsspeedRF", "[", 
+                RowBox[{"[", 
+                 RowBox[{"col", ",", 
+                  RowBox[{
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "-", 
+                   RowBox[{"alltrackingrange", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"col", ",", "1"}], "]"}], "]"}], "+", "1"}], ",", 
+                  ";;", ",", "1"}], "]"}], "]"}]}], "]"}], "&"}], "/@", 
+            "traj"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"speeds", "=", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"TtrajpointsspeedRF", "[", 
+              RowBox[{"[", 
+               RowBox[{"col", ",", 
+                RowBox[{
+                 RowBox[{"#", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], "-", 
+                 RowBox[{"alltrackingrange", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"col", ",", "1"}], "]"}], "]"}], "+", "1"}], ",", ";;",
+                 ",", "2"}], "]"}], "]"}], "&"}], "/@", "traj"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"sz", "=", 
+           RowBox[{"mult", " ", 
+            RowBox[{"antsizes", "[", 
+             RowBox[{"[", "col", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"together", "=", 
+           RowBox[{"Table", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"distances", "[", 
+                 RowBox[{"[", "k", "]"}], "]"}], ",", 
+                RowBox[{"speeds", "[", 
+                 RowBox[{"[", "k", "]"}], "]"}]}], "}"}], "\[Transpose]"}], 
+             ",", 
+             RowBox[{"{", 
+              RowBox[{"k", ",", 
+               RowBox[{"Length", "@", "distances"}]}], "}"}]}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"avgspeed", "=", 
+           RowBox[{"Table", "[", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"gweights", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "*", 
+                RowBox[{"(", 
+                 RowBox[{"Total", "[", 
+                  RowBox[{
+                   RowBox[{"Select", "[", 
+                    RowBox[{
+                    RowBox[{"together", "[", 
+                    RowBox[{"[", "k", "]"}], "]"}], ",", 
+                    RowBox[{
+                    RowBox[{"0", "<", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "\[LessEqual]", "sz"}], 
+                    "&"}]}], "]"}], "[", 
+                   RowBox[{"[", 
+                    RowBox[{";;", ",", "2"}], "]"}], "]"}], "]"}], ")"}]}], 
+               "  ", 
+               RowBox[{"(*", " ", 
+                RowBox[{
+                 RowBox[{"For", " ", "speeds"}], ",", " ", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"I", "'"}], "m", " ", "taking", " ", "ones"}], " ",
+                   ">", "0"}], ",", " ", 
+                 RowBox[{
+                 "which", " ", "may", " ", "leave", " ", "out", " ", "some"}],
+                  ",", " ", 
+                 RowBox[{
+                  RowBox[{"but", " ", "only", " ", "if", " ", "speed"}], "=", 
+                  "0"}], ",", " ", 
+                 RowBox[{"so", " ", "not", " ", "a", " ", "worry"}]}], "  ", 
+                "*)"}], "\[IndentingNewLine]", "+", 
+               RowBox[{
+                RowBox[{"gweights", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}], "*", 
+                RowBox[{"zmean", "[", 
+                 RowBox[{
+                  RowBox[{"Select", "[", 
+                   RowBox[{
+                    RowBox[{"together", "[", 
+                    RowBox[{"[", "k", "]"}], "]"}], ",", 
+                    RowBox[{
+                    RowBox[{"sz", "<", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "\[LessEqual]", 
+                    RowBox[{"2", "sz"}]}], "&"}]}], "]"}], "[", 
+                  RowBox[{"[", 
+                   RowBox[{";;", ",", "2"}], "]"}], "]"}], "]"}], 
+                "\[IndentingNewLine]", 
+                RowBox[{"gweights", "[", 
+                 RowBox[{"[", "3", "]"}], "]"}], "*", 
+                RowBox[{"zmean", "[", 
+                 RowBox[{
+                  RowBox[{"Select", "[", 
+                   RowBox[{
+                    RowBox[{"together", "[", 
+                    RowBox[{"[", "k", "]"}], "]"}], ",", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"2", "sz"}], "<", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "\[LessEqual]", 
+                    RowBox[{"3", "sz"}]}], "&"}]}], "]"}], "[", 
+                  RowBox[{"[", 
+                   RowBox[{";;", ",", "2"}], "]"}], "]"}], "]"}]}]}], ")"}], 
+             ",", 
+             RowBox[{"{", 
+              RowBox[{"k", ",", 
+               RowBox[{"Length", "@", "together"}]}], "}"}]}], "]"}]}], ";", 
+          "\[IndentingNewLine]", "avgspeed"}]}], "\[IndentingNewLine]", "]"}],
+        "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"col", ",", "4"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"group", ",", "5"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"ant", ",", 
+         RowBox[{"Length", "[", 
+          RowBox[{"alltrajinterpolated", "[", 
+           RowBox[{"[", 
+            RowBox[{"col", ",", "group"}], "]"}], "]"}], "]"}]}], "}"}]}], 
+      "]"}], "\[IndentingNewLine]", ",", 
+     RowBox[{"{", 
+      RowBox[{"col", ",", "group", ",", "ant"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.704359959299716*^9, 3.704359985242017*^9}, {
+  3.704360018106803*^9, 3.7043600657943993`*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Save results", "Title",
+ CellChangeTimes->{{3.704357875111394*^9, 3.704357876375296*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Save", "[", 
+   RowBox[{
+    RowBox[{"savedir", "<>", "\"\<densityALL\>\""}], ",", "densityALL"}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Save", "[", 
+   RowBox[{
+    RowBox[{"savedir", "<>", "\"\<densityRF\>\""}], ",", "densityRF"}], "]"}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Save", "[", 
+   RowBox[{
+    RowBox[{"savedir", "<>", "\"\<densityPF\>\""}], ",", "densityPF"}], "]"}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Save", "[", 
+   RowBox[{
+    RowBox[{"savedir", "<>", "\"\<relativeRFspeeddensity\>\""}], ",", 
+    "relativeRFspeeddensity"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Save", "[", 
+   RowBox[{
+    RowBox[{"savedir", "<>", "\"\<randmixcountsRF\>\""}], ",", 
+    "randmixcountsRF"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Save", "[", 
+   RowBox[{
+    RowBox[{"savedir", "<>", "\"\<avgspeedRF\>\""}], ",", "avgspeedRF"}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Save", "[", 
+   RowBox[{
+    RowBox[{"savedir", "<>", "\"\<randmixcountsRF\>\""}], ",", 
+    "randmixcountsRF"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.704358050718383*^9, 3.704358097374827*^9}, {
+  3.704359009235956*^9, 3.7043590105789948`*^9}, {3.704359393774995*^9, 
+  3.7043593956117983`*^9}, {3.70478210618815*^9, 3.704782106419578*^9}, {
+  3.704782862956708*^9, 3.7047828727318974`*^9}, {3.704783188618308*^9, 
+  3.704783188834854*^9}, {3.7049922289158707`*^9, 3.7049922484968643`*^9}}]
+}, Open  ]]
+},
+WindowSize->{1119, 751},
+WindowMargins->{{119, Automatic}, {-1, Automatic}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
+2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 280, 3, 92, "Title"],
+Cell[863, 27, 177, 2, 63, "Subchapter"],
+Cell[CellGroupData[{
+Cell[1065, 33, 221, 3, 47, "Subchapter"],
+Cell[1289, 38, 4117, 100, 222, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5443, 143, 180, 2, 63, "Subchapter"],
+Cell[5626, 147, 3997, 103, 264, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9660, 255, 177, 2, 63, "Subchapter"],
+Cell[9840, 259, 3995, 104, 264, "Input"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13884, 369, 321, 4, 92, "Title"],
+Cell[CellGroupData[{
+Cell[14230, 377, 211, 5, 95, "Subchapter"],
+Cell[14444, 384, 3265, 85, 243, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17746, 474, 175, 4, 63, "Subchapter"],
+Cell[17924, 480, 2832, 75, 201, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20793, 560, 213, 5, 63, "Subchapter"],
+Cell[21009, 567, 6991, 168, 348, "Input"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28049, 741, 95, 1, 92, "Title"],
+Cell[28147, 744, 1539, 40, 159, "Input"]
+}, Open  ]]
+}
+]
+*)
+
